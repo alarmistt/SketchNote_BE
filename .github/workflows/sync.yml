@@ -1,0 +1,33 @@
+name: Sync Fork from Upstream
+
+on:
+  repository_dispatch:
+    types: [sync_now]
+  workflow_dispatch:  # cho phép m tự bấm "Run workflow" thủ công
+  schedule:
+    - cron: '0 */6 * * *'  # backup check 6 tiếng/lần
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout fork
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Add upstream & fetch
+        run: |
+          git remote add upstream https://github.com/ThinhTG/SketchNote_BE.git
+          git fetch upstream
+
+      - name: Merge upstream/main → fork/main
+        run: |
+          git checkout main
+          git merge upstream/main --allow-unrelated-histories -m "Sync from upstream"
+          git push origin main
