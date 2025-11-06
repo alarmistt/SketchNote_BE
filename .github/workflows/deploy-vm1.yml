@@ -29,8 +29,8 @@ jobs:
       - name: 🏗️ Build & Push Eureka Server
         if: contains(join(github.event.commits.*.modified), 'eureka-server/')
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/eurekaserver:latest ./eureka-server
-          docker push ghcr.io/${{ github.repository_owner }}/eurekaserver:latest
+          docker build -t ghcr.io/${{ github.repository_owner }}/eurekaservice:latest ./eureka-server
+          docker push ghcr.io/${{ github.repository_owner }}/eurekaservice:latest
 
       # ===================== DEPLOY TO VM1 =====================
       - name: 🚀 Deploy to VM1
