@@ -43,5 +43,5 @@ jobs:
           script: |
             echo "🔁 Pulling latest images..."
             cd /root/SketchNote_BE
-            docker compose pull
-            docker compose up -d
+            docker compose -f docker-compose-services.yml pull
+            docker compose -f docker-compose-services.yml up -d
